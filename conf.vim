@@ -46,6 +46,9 @@ let &t_EI .= "\<Esc>[2 q"
 " 5 -> blinking vertical bar
 " 6 -> solid vertical bar
 
+" 补全窗口高度
+set pumheight=10
+
 if executable('clangd')
 	let s:use_lsp = 1
 	call add(s:output_messages, "use lsp...")
@@ -54,8 +57,14 @@ else
 	call add(s:output_messages, "disalbe lsp...")
 endif
 
-" 补全窗口高度
-set pumheight=10
+if has("python3")
+	let s:use_ctrlp = 0
+elseif has("python")
+	let s:use_ctrlp = 0
+else
+	let s:use_ctrlp = 1
+	call add(s:output_messages, "use ctrlp...")
+endif
 
 " ==================== common config end =======================
 
