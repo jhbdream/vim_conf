@@ -235,7 +235,7 @@ let g:lsp_log_file = expand('~/vim-lsp.log')
 if executable('clangd')
 	au User lsp_setup call lsp#register_server({
 				\ 'name': 'c/c++ Language Server',
-				\ 'cmd': {server_info->['/usr/local/bin/clangd']},
+				\ 'cmd': {server_info->['clangd']},
 				\ 'whitelist': ['c', 'cpp'],
 				\ })
 
