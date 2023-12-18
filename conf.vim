@@ -83,7 +83,7 @@ autocmd BufWritePre *.h,*.c,*.py,*.S,*.s,*.asm :call <SID>StripTrailingWhitespac
 
 " ==================== cscope && ctag config end =======================
 	
-if s:use_lsp == 1
+if s:use_lsp == 0
 
 	" 设置cscope
 	if executable('cscope')
@@ -238,8 +238,8 @@ let g:lsp_document_code_action_signs_enabled = 0
 let g:lsp_document_symbol_detail = 1
 
 " debug use
-let g:lsp_log_verbose = 0
-let g:lsp_log_file = expand('~/vim-lsp.log')
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('~/vim-lsp.log')
 
 if executable('clangd')
 	au User lsp_setup call lsp#register_server({
