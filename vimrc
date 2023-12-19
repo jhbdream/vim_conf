@@ -1,0 +1,1 @@
+source ~/.vim/conf.vim
