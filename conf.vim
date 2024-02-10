@@ -10,9 +10,11 @@ let s:use_ctrlp = 0
 
 " ==================== common config begin =======================
 
+" 高亮光标行和光标列
 set cursorline
+set cursorcolumn
 
-set noexpandtab
+set expandtab
 set shiftwidth=0
 set tabstop=4
 set softtabstop=4
@@ -45,6 +47,26 @@ let &t_EI .= "\<Esc>[2 q"
 " Recent versions of xterm (282 or above) also support
 " 5 -> blinking vertical bar
 " 6 -> solid vertical bar
+
+set keyprotocol=
+let &term=&term
+
+" Termdebug
+packadd termdebug
+set splitright
+
+let g:termdebugger = "gdb-multiarch"
+
+" C(++) debugging
+" See https://neovim.io/doc/user/nvim_terminal_emulator.html
+" For a nice split window view
+let g:termdebug_popup = 0
+let g:termdebug_wide = 60
+" Map ESC to exit terminal mode
+tnoremap <Esc> <C-\><C-n>
+nnoremap <silent> <leader>b :Break<CR>
+nnoremap <silent> <leader>bc :Clear<CR>
+nnoremap <silent> <leader>c :Continue<CR>
 
 " 补全窗口高度
 set pumheight=10
@@ -193,6 +215,9 @@ let g:Lf_GtagsGutentags = 0
 " Show icons, icons are shown by default
 let g:Lf_ShowDevIcons = 1
 
+" 每次重新建立cache
+let g:Lf_UseCache = 0
+
 " 文件查找快捷键
 let g:Lf_ShortcutF = '<C-P>'
 noremap <C-F> :<C-U><C-R>=printf("Leaderf function %s", "")<CR><CR>
@@ -303,9 +328,32 @@ endif
 
 " ===================== nerdtree =========================
 
-nnoremap <F1> :NERDTreeToggle<CR>
+let g:NetrwIsOpen=0
+
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Lexplore
+    endif
+endfunction
+
+nnoremap <C-\> :call ToggleNetrw()<CR>
 
 " ===================== nerdtree =========================
+
+" ===================== luochen1990/rainbow =========================
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+" ===================== luochen1990/rainbow =========================
 
 " ===================== load plug begin =========================
 let plug_url_format = 'git@github.com:%s'
@@ -339,6 +387,13 @@ Plug 'preservim/nerdtree'
 
 Plug 'pulkomandy/c.vim'
 
+Plug 'dhruvasagar/vim-table-mode'
+
+Plug 'vim-scripts/DoxygenToolkit.vim'
+
+" 彩色括号
+Plug 'luochen1990/rainbow'
+
 call plug#end()
 
 " ===================== load plug end =========================
@@ -362,3 +417,5 @@ augroup VimStartupMessages
 	autocmd VimEnter * echom join(s:output_messages, "\n")
 augroup END
 
+autocmd FileType text syntax match vhcaCase /^# VHCA_CASE_\d\+$/
+highlight vhcaCase ctermfg=lightgray ctermbg=darkblue
