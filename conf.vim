@@ -28,6 +28,8 @@ set incsearch
 set nocompatible
 set encoding=utf-8
 
+set hlsearch
+
 set number
 
 set ttimeout        " time out for key codes
@@ -352,8 +354,11 @@ nnoremap <C-\> :call ToggleNetrw()<CR>
 
 " ===================== luochen1990/rainbow =========================
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
-
 " ===================== luochen1990/rainbow =========================
+
+" ===================== vim-cool =========================
+let g:cool_total_matches = 1
+" ===================== vim-cool =========================
 
 " ===================== load plug begin =========================
 let plug_url_format = 'git@github.com:%s'
@@ -393,6 +398,13 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 
 " 彩色括号
 Plug 'luochen1990/rainbow'
+
+" hls 高亮插件
+Plug 'romainl/vim-cool'
+
+" 对齐插件
+" :Tabularize /=<CR>
+Plug 'godlygeek/tabular'
 
 call plug#end()
 
