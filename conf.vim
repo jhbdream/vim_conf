@@ -164,11 +164,11 @@ let g:lightline = {
 			\ },
 			\ 'component_function': {
 			\   'gitbranch': 'FugitiveHead',
-			\   'func': 'CurrentFunction',
 			\   'gutentags': 'gutentags#statusline',
 			\ },
 			\ }
 
+" 'func': 'CurrentFunction',
 function! CurrentFunction()
     return cfi#format("%s", "")
 endfunction
@@ -208,7 +208,7 @@ let g:Lf_UseVersionControlTool = 0
 " 设置忽略文件
 let g:Lf_WildIgnore = {
        \ 'dir': ['.svn','.git','.hg'],
-       \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.[doi]','*.so','*.py[co]', '*.js', '*.html']
+       \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.[doi]','*.so','*.py[co]', '*.js', '*.html', 'compile_commands.json']
        \}
 
 let g:Lf_HideHelp = 1
@@ -265,13 +265,15 @@ let g:lsp_document_code_action_signs_enabled = 0
 let g:lsp_document_symbol_detail = 1
 
 " debug use
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('~/vim-lsp.log')
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
 
 if executable('clangd')
 	au User lsp_setup call lsp#register_server({
 				\ 'name': 'c/c++ Language Server',
-				\ 'cmd': {server_info->['clangd']},
+                \ 'cmd': {server_info->[
+                \   'clangd',
+                \ ]},
 				\ 'whitelist': ['c', 'cpp'],
 				\ })
 
@@ -354,6 +356,10 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 let g:cool_total_matches = 1
 " ===================== vim-cool =========================
 
+" ===================== vivien/vim-linux-coding-style =========================
+let g:linuxsty_patterns = [ "linux" ]
+" ===================== vim-cool =========================
+
 " ===================== load plug begin =========================
 let plug_url_format = 'git@github.com:%s'
 
@@ -400,6 +406,10 @@ Plug 'romainl/vim-cool'
 " :Tabularize /=<CR>
 Plug 'godlygeek/tabular'
 
+Plug 'joshdick/onedark.vim'
+
+Plug 'vivien/vim-linux-coding-style'
+
 call plug#end()
 
 " ===================== load plug end =========================
@@ -408,11 +418,13 @@ call plug#end()
 
 set background=dark
 
-" colorscheme peaksea
-" colorscheme onehalfdark
-
+set termguicolors
 let g:nightflyCursorColor = v:true
 colorscheme nightfly
+
+" set termguicolors
+" let g:onedark_termcolors=256
+" colorscheme onedark
 
 " ===================== theme end   =========================
 
